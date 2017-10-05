@@ -7,24 +7,36 @@ class Graph(object):
 		self.edges = []
 
 	def add_vertex(self, name):	
-		if len(self.vertexes) == 0: 
-			v = Vertex(name)
-			self.vertexes.append(v)
-			return
-		else:
-			for vertex in self.vertexes:			
-				if(vertex.equals(name)):
-					return False
+		for vertex in self.vertexes:			
+			if(vertex.equals(name)):
+				return vertex
 
-		v = Vertex(name)
-		self.vertexes.append(v)
+		vertex = Vertex(name)
+		self.vertexes.append(vertex)
+
+		return vertex
 
 	def add_edge(self, u, v):
-		self.add_vertex(u)
-		self.add_vertex(v)
+		u = self.add_vertex(u)
+		v = self.add_vertex(v)
 
 		e = Edge(u, v)
+
+		for edge in self.edges:
+			if(e.equals(edge)):
+				return
+
 		self.edges.append(e)
+
+	def printVertexes(self):
+		for v in self.vertexes:
+			print v.getName()
+		print "Total number of vertexes:", len(self.vertexes)
+
+	def printEdges(self):
+		for e in self.edges:
+			e.printEdge()
+		print "Total number of edges:", len(self.edges)
 
 	def loadGraphFromFile(self, FILE):
 		with open(FILE, 'r') as f:
@@ -32,7 +44,5 @@ class Graph(object):
 				u, v = line.strip().split(' ')
 				self.add_edge(u, v)
 
-		for v in self.vertexes:
-			print "a"+v.name
-
-		print "Tam:",len(self.vertexes)
+		self.printVertexes()
+		self.printEdges()

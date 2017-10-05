@@ -3,8 +3,7 @@ class Vertex(object):
 		self.name = name
 
 	def equals(self, name):
-		if self.name == name:
-			return True			
+		return True if self.name == name else False
 
 	def getName(self):
 		return self.name
