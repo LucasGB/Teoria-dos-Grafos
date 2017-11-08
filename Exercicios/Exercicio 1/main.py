@@ -6,6 +6,8 @@ if __name__ == '__main__':
 	graph.loadGraphFromFile('entrada.txt')
 	graph.debug()
 
-	dijkstra = Dijkstra(graph, graph.get_vertex('a'))
-	dijkstra.run()
+	dijkstra = Dijkstra(graph, graph.get_vertex('a'), graph.get_vertex('d'))
+	path = dijkstra.run()
+
+	print '\nShortest Path:', path
 

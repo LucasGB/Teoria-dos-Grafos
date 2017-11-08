@@ -1,16 +1,22 @@
 
 
+
 class Dijkstra(object):
-	def __init__(self, graph, S):
+	def __init__(self, graph, S, T):
 		self.graph = graph
 		self.S = S
+		self.T = T
 		self.visited = []
+		self.path = []
 
 	def extract_min(self):
-		min_d = self.graph.vertexes[0]
+		min_d = None
 
 		for v in self.Q:
-			if(v.getD() < min_d.getD()):
+			if(min_d == None):
+				min_d = v
+
+			elif(v.getD() < min_d.getD()):
 				min_d = v
 
 		return min_d
@@ -32,14 +38,16 @@ class Dijkstra(object):
 			self.visited.append(u)
 
 			for e in self.graph.get_edges(u):
-				print e.getU().name
-				if(e.getV().getD() > u.getD() + e.getWeight()):
+				if(e.getV() not in self.visited and e.getV().getD() > u.getD() + e.getWeight()):
 					e.getV().setD(e.getU().getD() + e.getWeight())
 					e.getV().setPi(u)
 					self.Q.add(e.getV())
 
-		print 'finished'
-
-
-
-				
+		vertex = self.T
+		self.path.append(vertex.getName())
+		
+		while(vertex.getPi() != None):
+			vertex = vertex.getPi()
+			self.path.append(vertex.getName())
+	
+		return self.path[::-1]
